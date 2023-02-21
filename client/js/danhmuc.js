@@ -47,6 +47,25 @@ const listNews = [
     }
 ]
 
+const arrDanhMuc = [
+    {
+        id: 1,
+        name: 'Thời sự'
+    },
+    {
+        id: 2,
+        name: 'Góc nhìn'
+    },
+    {
+        id: 3,
+        name: 'Thế giới'
+    },
+    {
+        id: 4,
+        name: 'Kinh doanh'
+    }
+]
+
 var listNewsByCat = listNews.filter(function (news) {
     return news.catId == cId;
 })
@@ -68,3 +87,11 @@ listNewsByCat.forEach(function (news) {
     ulElement.appendChild(liElement);
 
 })
+
+var catName = arrDanhMuc.find(function (it) {
+    return it.id == cId;
+}).name;
+
+var h3 = document.querySelector('#h3');
+
+h3.innerText = 'Tin tức :: ' + catName;
