@@ -1,13 +1,4 @@
-function getParameterByName(name, url = window.location.href) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-
-var cId = getParameterByName('cid');
+const detailElement = document.querySelector("#detail");
 
 const listNews = [
     {
@@ -27,7 +18,7 @@ const listNews = [
     {
         id: 3,
         description: 'Những mỹ nhân Việt duyên dáng ở tuổi tứ tuần',
-        detail: `Để bảo vệ giàn khoan, Trung Quốc đã điều thêm 17 tàu các loại so với hôm trước, sẵn
+        detail: `Những mỹ nhân Việt duyên dáng, Trung Quốc đã điều thêm 17 tàu các loại so với hôm trước, sẵn
         sàng đâm va vào tàu Việt Nam.`,
         catId: 1
     },
@@ -47,24 +38,27 @@ const listNews = [
     }
 ]
 
-var listNewsByCat = listNews.filter(function (news) {
-    return news.catId == cId;
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+var dId = getParameterByName('did');
+
+var newsById = listNews.filter(function (news) {
+    return news.id == dId;
 })
 
-const ulElement = document.querySelector("#list-news-by-cat");
-
-listNewsByCat.forEach(function (news) {
-    const liElement = document.createElement('li');
-    liElement.innerHTML = `
-        <h2>
-            <a href="chitiet.html?did=${news.id}" title="">${news.description}</a>
-        </h2>
-        <div class="item">
+newsById.forEach(function (news) {
+    detailElement.innerHTML = `
+        <h3>${news.description}</h3>
+        <div class="main-content">
             <p>${news.detail}</p>
-            <div class="clr"></div>
         </div>
     `;
-
-    ulElement.appendChild(liElement);
 
 })

@@ -42,7 +42,7 @@ listNews.forEach(function (news) {
     const liElement = document.createElement('li');
     liElement.innerHTML = `
         <h2>
-            <a href="chitiet.html" title="">${news.description}</a>
+            <a href="chitiet.html?did=${news.id}" title="">${news.description}</a>
         </h2>
         <div class="item">
             <p>${news.detail}</p>

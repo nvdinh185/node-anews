@@ -22,7 +22,7 @@ const listDanhMuc = [
 listDanhMuc.forEach(function (news) {
     const liElement = document.createElement('li');
     liElement.innerHTML = `
-        <a href="danhmuc.html?id=${news.id}">${news.name}</a>
+        <a href="danhmuc.html?cid=${news.id}">${news.name}</a>
     `;
 
     listCat.appendChild(liElement);
