@@ -1,4 +1,4 @@
-const listCat = document.querySelector("#list-danhmuc");
+const listCatElement = document.querySelector("#list-danhmuc");
 
 const listDanhMuc = [
     {
@@ -25,6 +25,6 @@ listDanhMuc.forEach(function (news) {
         <a href="danhmuc.html?cid=${news.id}">${news.name}</a>
     `;
 
-    listCat.appendChild(liElement);
+    listCatElement.appendChild(liElement);
 
 })

@@ -6,8 +6,11 @@ db.serialize();
 
 module.exports = {
     getListNews,
+    getListNewsByCat,
+    getNewsDetail,
+    getCategories,
     postContact
-};
+}
 
 async function getListNews() {
     const listNews = await new Promise((resolve, reject) => {
@@ -17,6 +20,36 @@ async function getListNews() {
         })
     })
     return listNews;
+}
+
+async function getListNewsByCat(query) {
+    const listNewsByCat = await new Promise((resolve, reject) => {
+        db.all(`SELECT * FROM news WHERE cat_id = ${query.cId}`, (err, row) => {
+            if (err) reject(err);
+            resolve(row);
+        })
+    })
+    return listNewsByCat;
+}
+
+async function getNewsDetail(query) {
+    const newsDetail = await new Promise((resolve, reject) => {
+        db.each(`SELECT * FROM news WHERE id = ${query.dId}`, (err, row) => {
+            if (err) reject(err);
+            resolve(row);
+        })
+    })
+    return newsDetail;
+}
+
+async function getCategories() {
+    const listCats = await new Promise((resolve, reject) => {
+        db.all(`SELECT * FROM categories`, (err, row) => {
+            if (err) reject(err);
+            resolve(row);
+        })
+    })
+    return listCats;
 }
 
 async function postContact(contact) {
