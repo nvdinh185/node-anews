@@ -22,11 +22,11 @@
         newsById = newsById.data;
 
         detailElement.innerHTML = `
-                <h3>${newsById.description}</h3>
-                <div class="main-content">
-                    <p>${newsById.detail}</p>
-                </div>
-            `;
+            <h3>${newsById.description}</h3>
+            <div class="main-content">
+                <p>${newsById.detail}</p>
+            </div>
+        `;
     } catch (error) {
         console.log('Lỗi ', error);
     }
