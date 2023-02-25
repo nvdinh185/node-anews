@@ -2,7 +2,7 @@
     try {
         const listCatElement = document.querySelector("#list-danhmuc");
 
-        var listDanhMuc = await axios.get('/news/cats');
+        var listDanhMuc = await axios.get('http://localhost:3000/news/cats');
 
         listDanhMuc = listDanhMuc.data;
 

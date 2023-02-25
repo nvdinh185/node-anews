@@ -11,11 +11,11 @@
 
         var cId = getParameterByName('cid');
 
-        var listDanhMuc = await axios.get('/news/cats');
+        var listDanhMuc = await axios.get('http://localhost:3000/news/cats');
 
         listDanhMuc = listDanhMuc.data;
 
-        var listNewsByCat = await axios.get('/news/list-news-by-cat', {
+        var listNewsByCat = await axios.get('http://localhost:3000/news/list-news-by-cat', {
             params: {
                 cId: cId
             }

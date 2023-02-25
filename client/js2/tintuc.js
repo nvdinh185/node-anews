@@ -1,6 +1,6 @@
 (async () => {
     try {
-        var listNews = await axios.get('/news/list-news');
+        var listNews = await axios.get('http://localhost:3000/news/list-news');
         listNews = listNews.data;
         const ulElement = document.querySelector("#list-news");
 
