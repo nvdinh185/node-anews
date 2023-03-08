@@ -56,12 +56,10 @@ async function postContact(contact) {
     return new Promise((resolve, reject) => {
         db.run(`INSERT INTO contacts (name, phone, web, gender, picture, content) VALUES (?, ?, ?, ?, ?, ?)`,
             [contact.name, contact.phone, contact.web,
-            contact.gender, contact.picture, contact.content], function (err) {
+            contact.gender, contact.file, contact.content], function (err) {
                 if (err) {
-                    // console.error(`Lỗi ${err.message}`);
                     reject(new Error(err.message));
                 }
-                // console.log(`this.changes: ${this.changes}`);
                 resolve(this.changes);
             });
     })
