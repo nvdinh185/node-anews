@@ -50,7 +50,7 @@ function getParameterByName(name, url = window.location.href) {
 var dId = getParameterByName('did');
 
 var newsById = listNews.filter(function (news) {
-    return news.id == dId;
+    return news.id === Number(dId);
 })
 
 newsById.forEach(function (news) {
