@@ -1,8 +1,5 @@
 ﻿const sqlite3 = require('sqlite3').verbose();
 const dbFile = './database/news.db';
-const db = new sqlite3.Database(dbFile);
-
-db.serialize();
 
 module.exports = {
     getListNews,
@@ -12,55 +9,99 @@ module.exports = {
     postContact
 }
 
-async function getListNews() {
-    const listNews = await new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM news`, (err, row) => {
-            if (err) reject(err);
-            resolve(row);
+async function getListNews(req, res, next) {
+    try {
+        var db = new sqlite3.Database(dbFile);
+        db.serialize();
+        const listNews = await new Promise((resolve, reject) => {
+            db.all(`SELECT * FROM news`, (err, row) => {
+                if (err) reject(err);
+                resolve(row);
+            })
         })
-    })
-    return listNews;
+        res.json(listNews);
+    } catch (err) {
+        next(err);
+    } finally {
+        db.close();
+    }
 }
 
-async function getListNewsByCat(query) {
-    const listNewsByCat = await new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM news WHERE cat_id = ${query.cId}`, (err, row) => {
-            if (err) reject(err);
-            resolve(row);
+async function getListNewsByCat(req, res, next) {
+    var query = req.query;
+    try {
+        var db = new sqlite3.Database(dbFile);
+        db.serialize();
+        const listNewsByCat = await new Promise((resolve, reject) => {
+            db.all(`SELECT * FROM news WHERE cat_id = ${query.cId}`, (err, row) => {
+                if (err) reject(err);
+                resolve(row);
+            })
         })
-    })
-    return listNewsByCat;
+        res.json(listNewsByCat);
+    } catch (err) {
+        next(err);
+    } finally {
+        db.close();
+    }
 }
 
-async function getNewsDetail(query) {
-    const newsDetail = await new Promise((resolve, reject) => {
-        db.each(`SELECT * FROM news WHERE id = ${query.dId}`, (err, row) => {
-            if (err) reject(err);
-            resolve(row);
+async function getNewsDetail(req, res, next) {
+    var query = req.query;
+    try {
+        var db = new sqlite3.Database(dbFile);
+        db.serialize();
+        const newsDetail = await new Promise((resolve, reject) => {
+            db.each(`SELECT * FROM news WHERE id = ${query.dId}`, (err, row) => {
+                if (err) reject(err);
+                resolve(row);
+            })
         })
-    })
-    return newsDetail;
+        res.json(newsDetail);
+    } catch (err) {
+        next(err);
+    } finally {
+        db.close();
+    }
 }
 
-async function getCategories() {
-    const listCats = await new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM categories`, (err, row) => {
-            if (err) reject(err);
-            resolve(row);
+async function getCategories(req, res, next) {
+    try {
+        var db = new sqlite3.Database(dbFile);
+        db.serialize();
+        const listCats = await new Promise((resolve, reject) => {
+            db.all(`SELECT * FROM categories`, (err, row) => {
+                if (err) reject(err);
+                resolve(row);
+            })
         })
-    })
-    return listCats;
+        res.json(listCats);
+    } catch (err) {
+        next(err);
+    } finally {
+        db.close();
+    }
 }
 
-async function postContact(contact) {
-    return new Promise((resolve, reject) => {
-        db.run(`INSERT INTO contacts (name, phone, web, gender, picture, content) VALUES (?, ?, ?, ?, ?, ?)`,
-            [contact.name, contact.phone, contact.web,
-            contact.gender, contact.file, contact.content], function (err) {
-                if (err) {
-                    reject(new Error(err.message));
-                }
-                resolve(this.changes);
-            });
-    })
+async function postContact(req, res, next) {
+    var formData = req.form_data;
+    try {
+        var db = new sqlite3.Database(dbFile);
+        db.serialize();
+        var result = new Promise((resolve, reject) => {
+            db.run(`INSERT INTO contacts (name, phone, web, gender, picture, content) VALUES (?, ?, ?, ?, ?, ?)`,
+                [formData.name, formData.phone, formData.web,
+                formData.gender, formData.file, formData.content], function (err) {
+                    if (err) {
+                        reject(new Error(err.message));
+                    }
+                    resolve(this.changes);
+                });
+        })
+        res.json(result);
+    } catch (err) {
+        next(err);
+    } finally {
+        db.close();
+    }
 }
