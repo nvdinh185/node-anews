@@ -20,11 +20,13 @@ function uploadFile(req, res, next) {
             for (var key in fields) {
                 formData[key] = fields[key];
             }
-            var isNotEntry = !(Object.entries(files).length === 0 && files.constructor === Object);
+            var isSelectedFile = !(Object.entries(files).length === 0 && files.constructor === Object);
             var key = "file";
-            if (isNotEntry) {
+            if (isSelectedFile) {
+                var fileName = files[key].originalFilename.split('.')[0];
+                var ext = files[key].originalFilename.split('.')[1];
                 //đường dẫn thực file upload lên
-                var filenameStored = `${dirUpload}${systempath.sep}${Date.now()}_${files[key].originalFilename}`;
+                var filenameStored = `${dirUpload}${systempath.sep}${fileName}_${Date.now()}.${ext}`;
 
                 var oldpath = files[key].filepath;
                 var newpath = filenameStored

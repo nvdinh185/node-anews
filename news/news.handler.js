@@ -88,7 +88,7 @@ async function postContact(req, res, next) {
     try {
         var db = new sqlite3.Database(dbFile);
         db.serialize();
-        var result = new Promise((resolve, reject) => {
+        var result = await new Promise((resolve, reject) => {
             db.run(`INSERT INTO contacts (name, phone, web, gender, picture, content) VALUES (?, ?, ?, ?, ?, ?)`,
                 [formData.name, formData.phone, formData.web,
                 formData.gender, formData.file, formData.content], function (err) {
