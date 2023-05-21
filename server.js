@@ -3,9 +3,6 @@ const path = require('path');
 const app = express();
 const errorHandler = require('./_helpers/error-handler');
 
-const cors = require('cors');
-app.use(cors());
-
 const publicPath = path.join(__dirname, "client");
 app.use(express.static(publicPath));
 

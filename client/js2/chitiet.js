@@ -13,11 +13,7 @@
 
         var dId = getParameterByName('did');
 
-        var newsById = await axios.get('http://localhost:3000/news/detail', {
-            params: {
-                dId: dId
-            }
-        });
+        var newsById = await axios.get(`http://localhost:3000/news/detail?dId=${dId}`);
 
         newsById = newsById.data;
 

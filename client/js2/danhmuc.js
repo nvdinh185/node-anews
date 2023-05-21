@@ -11,15 +11,7 @@
 
         var cId = getParameterByName('cid');
 
-        var listDanhMuc = await axios.get('http://localhost:3000/news/cats');
-
-        listDanhMuc = listDanhMuc.data;
-
-        var listNewsByCat = await axios.get('http://localhost:3000/news/list-news-by-cat', {
-            params: {
-                cId: cId
-            }
-        });
+        var listNewsByCat = await axios.get(`http://localhost:3000/news/list-news-by-cat?cId=${cId}`);
 
         listNewsByCat = listNewsByCat.data;
 
@@ -40,6 +32,10 @@
             ulElement.appendChild(liElement);
 
         })
+
+        var listDanhMuc = await axios.get('http://localhost:3000/news/cats');
+
+        listDanhMuc = listDanhMuc.data;
 
         var catName = listDanhMuc.find(function (it) {
             return it.id == cId;
